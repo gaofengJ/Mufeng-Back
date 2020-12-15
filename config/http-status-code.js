@@ -1,0 +1,6 @@
+const HTTP_STATUS_CODE = {
+  SUCCESS_CODE: 0,
+  ERROR_CODE: -1
+}
+
+module.exports = HTTP_STATUS_CODE

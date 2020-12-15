@@ -1,0 +1,8 @@
+# 忽略.history中的文件
+.history/
+# 忽略.vscode总的文件
+.vscode/
+# 忽略chromium
+chromium/
+# 忽略node_modules
+node_modules/
