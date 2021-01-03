@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const env = process.env.NODE_ENV // 环境参数：根据package中执行脚本判断
+const env = process.env.NODE_ENV || 'dev' // 环境参数：根据package中执行脚本判断
 
 const configPathMap = {
   dev: '../../mufeng-back-db-config.json',
