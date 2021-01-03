@@ -4,11 +4,12 @@ const { daily } = require('../../tushare/daily')
 const { insertRecord } = require('../../dao/tushare/daily')
 
 const dateArgv = process.argv[2] // node daily.js '2021-01-04'
-let date = dateArgv ? new Date(dateArgv) : new Date() // 如果命令行中没有加日期，就使用当天日期
-date = utils._dateFormat(date, 'yyyyMMdd')
+let _date = dateArgv ? new Date(dateArgv) : new Date() // 如果命令行中没有加日期，就使用当天日期
+_date = utils._dateFormat(_date, 'yyyyMMdd')
 
-;(async () => {
-  const { code, data } = await daily(date)
+async function shellDaily (date) {
+  _date = date || _date // 方便批量操作 批量操作时，每次传入一个date
+  const { code, data } = await daily(_date)
   if (code) return
   const { fields, items } = data // fields和items都为Object，并且不是类数组 [ 'ts_code', 'trade_date', 'open', 'high', 'low', 'close', 'pre_close', 'change', 'pct_chg', 'vol', 'amount' ] 'object'
   let SucCount = 0
@@ -23,10 +24,16 @@ date = utils._dateFormat(date, 'yyyyMMdd')
     const res = await insertRecord(params)
     if (res.affectedRows === 1) {
       SucCount++
-      console.log(`${date}已导入${SucCount}条数据`)
+      console.log(`${_date}已导入${SucCount}条数据`)
     } else {
       errCount++
-      console.log(`${date}已有${errCount}条数据导入失败`)
+      console.log(`${_date}已有${errCount}条数据导入失败`)
     }
   }
+}
+
+;(async () => {
+  shellDaily()
 })()
+
+module.exports = shellDaily
