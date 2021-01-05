@@ -1,4 +1,4 @@
-const { exec } = require('../db/mysql')
+const { exec } = require('../../db/mysql')
 
 const insertSentiment = (params) => {
   const sql = `INSERT INTO t_market_sentiment (id, date, a, b, c, d, e, sentiment_a, sentiment_b, sentiment_c, sentiment_d) VALUES ('${params.uuid}', ${params.date}, ${params.a}, ${params.b}, ${params.c}, ${params.d}, ${params.e}, ${params.sentimentA}, ${params.sentimentB}, ${params.sentimentC}, ${params.sentimentD});`

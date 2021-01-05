@@ -15,7 +15,7 @@ function exec (sql) {
         reject(err)
         return
       }
-      resolve(result)
+      resolve(result[0]) // Nodejs操作MySQL返回RowDataPacket类型的对象，使用result[0]方便之后处理
     })
   })
   return promise
