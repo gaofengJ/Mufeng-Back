@@ -21,8 +21,7 @@ router.post('/market-sentiment', async (req, res, next) => {
 router.post('/percent-statistics', async (req, res, next) => {
   let { date } = req.body
   date = new Date(date)
-  // const list = await getPercentStatistics(date)
-  list = [1, 2, 3]
+  const list = await getPercentStatistics(date)
   res.json(new SuccessModel({
     list
   }))
