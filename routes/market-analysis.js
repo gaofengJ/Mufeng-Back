@@ -22,7 +22,7 @@ router.post('/percent-statistics', async (req, res, next) => {
   let { date } = req.body
   date = new Date(date)
   // const list = await getPercentStatistics(date)
-  list = [4, 5, 6]
+  list = [1, 2, 3]
   res.json(new SuccessModel({
     list
   }))
