@@ -1,21 +1,23 @@
 const mysql = require('mysql')
 const { MYSQL_CONF } = require('../conf/db')
 
-// 创建连接对象
-const con = mysql.createConnection(MYSQL_CONF)
+const pool = mysql.createPool(MYSQL_CONF)
 
-// 开始连接
-con.connect()
-
-// 统一执行sql的函数
 function exec (sql) {
   const promise = new Promise((resolve, reject) => {
-    con.query(sql, (err, result) => {
+    pool.getConnection(function(err, con) {
       if (err) {
         reject(err)
-        return
+      } else {
+        con.query(sql, (err, res) => {
+          if (err) {
+            reject(err)
+          }
+          // 释放连接
+          con.release()
+          resolve(res[0]) // Nodejs操作MySQL返回RowDataPacket类型的对象，使用result[0]方便之后处理
+        })
       }
-      resolve(result[0]) // Nodejs操作MySQL返回RowDataPacket类型的对象，使用result[0]方便之后处理
     })
   })
   return promise
