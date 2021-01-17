@@ -5,21 +5,6 @@ const insertRecord = (params) => {
   return exec(sql)
 }
 
-const deleteRecord = (date) => {
-  console.log('deleteRecord')
-}
-
-const updateRecord = (date) => {
-  console.log('updateRecord')
-}
-
-const selectRecord = async (startDate, endDate) => {
-  console.log(1)
-}
-
 module.exports = {
-  insertRecord,
-  deleteRecord,
-  updateRecord,
-  selectRecord
+  insertRecord
 }
