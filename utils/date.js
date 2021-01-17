@@ -15,8 +15,8 @@ function _dateFormat (date = new Date(), fmt = 'yyyy-MM-dd') {
   }
   const obj = {
     yyyy: date.getFullYear(),
-    MM: date.getMonth() + 1,
-    dd: date.getDate(),
+    MM: date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
+    dd: date.getDate() > 9 ? date.getDate() : '0' + date.getDate(),
     day: date.getDay() // 0-6 代表周日到周六
   }
   for (const i in obj) {

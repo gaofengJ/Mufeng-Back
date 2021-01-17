@@ -15,7 +15,7 @@ function exec (sql) {
           }
           // 释放连接
           con.release()
-          resolve(res[0]) // Nodejs操作MySQL返回RowDataPacket类型的对象，使用result[0]方便之后处理
+          resolve(res)
         })
       }
     })
