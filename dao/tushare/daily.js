@@ -1,19 +1,19 @@
 const { exec } = require('../../db/mysql')
 
-const insertRecord = (params) => {
+function insertRecord (params) {
   const sql = `INSERT INTO t_daily VALUES ('${params.uuid}', '${params.ts_code}', ${params.trade_date}, ${params.open}, ${params.high}, ${params.low}, ${params.close}, ${params.pre_close}, ${params.change}, ${params.pct_chg}, ${params.vol}, ${params.amount});`
   return exec(sql)
 }
 
-const deleteRecord = (date) => {
+function deleteRecord (date) {
   console.log('deleteSentiment')
 }
 
-const updateRecord = (date) => {
+function updateRecord (date) {
   console.log('updateSentiment')
 }
 
-const selectRecord = async (startDate, endDate) => {
+async function selectRecord (startDate, endDate) {
   console.log(1)
 }
 
