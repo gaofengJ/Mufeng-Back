@@ -19,7 +19,7 @@ async function shellStockBasic () {
     params.market = items[itemIdx][5]
     params.list_date = items[itemIdx][6]
     const res = await insertRecord(params)
-    if (!res) {
+    if (res.affectedRows === 1) {
       console.log(`已导入${params.symbol}基础信息`)
     } else {
       console.log(`${params.symbol}基础信息导入失败`)

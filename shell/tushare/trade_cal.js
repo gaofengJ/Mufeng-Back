@@ -18,7 +18,7 @@ async function shellDaily (year) {
     params.calDate = items[itemIdx][1]
     params.isOpen = items[itemIdx][2]
     const res = await insertRecord(params)
-    if (!res) {
+    if (res.affectedRows === 1) {
       console.log(`已导入${params.calDate}交易日历`)
     } else {
       console.log(`${params.calDate}交易日历导入失败`)
