@@ -1,5 +1,4 @@
 const { v4: uuidv4 } = require('uuid')
-const utils = require('../../utils/index')
 const { tradeCal } = require('../../tushare/trade_cal')
 const { insertRecord } = require('../../dao/tushare/trade_cal')
 
@@ -11,17 +10,23 @@ async function shellDaily (year) {
   const { code, data } = await tradeCal(_year)
   if (code) return
   const { fields, items } = data
+
+  let SucCount = 0
+  let errCount = 0
   if (!items[0]) return // 如果没有数据就返回
   for (const itemIdx in items) {
     const params = {}
     params.uuid = uuidv4()
-    params.calDate = items[itemIdx][1]
-    params.isOpen = items[itemIdx][2]
+    for (const fieldIdx in fields) {
+      params[fields[fieldIdx]] = items[itemIdx][fieldIdx]
+    }
     const res = await insertRecord(params)
     if (res.affectedRows === 1) {
-      console.log(`已导入${params.calDate}交易日历`)
+      SucCount++
+      console.log(`${_year}已导入${SucCount}条数据`)
     } else {
-      console.log(`${params.calDate}交易日历导入失败`)
+      errCount++
+      console.log(`${_year}已有${errCount}条数据导入失败`)
     }
   }
 }

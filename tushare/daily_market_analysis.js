@@ -1,6 +1,11 @@
 const utils = require('../utils/index')
 const { queryIsOpen } = require('../dao/tushare/trade_cal')
-const { limitUNotLine } = require('../dao/tushare/limit_list')
+const {
+  limitUNotLine,
+  limitUNotLineAndOpenHigh,
+  limitUNotLineAndUp,
+  hasLimited
+} = require('../dao/tushare/limit_list')
 
 async function dailyMarketAnalysis (date) {
 
@@ -20,8 +25,10 @@ async function dailyMarketAnalysis (date) {
 
   res.a = await limitUNotLine(date)
   res.b = await limitUNotLine(prevTradeDate)
-  console.log(res.a, date)
-  console.log(res.b, prevTradeDate)
+  res.c = await limitUNotLineAndOpenHigh(date, prevTradeDate)
+  res.d = await limitUNotLineAndUp(date, prevTradeDate)
+  res.e = await hasLimited(date)
+  console.log(res.e)
   return
 
   return res

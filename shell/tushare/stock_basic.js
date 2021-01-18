@@ -1,5 +1,4 @@
 const { v4: uuidv4 } = require('uuid')
-const utils = require('../../utils/index')
 const { stockBasic } = require('../../tushare/stock_basic')
 const { insertRecord } = require('../../dao/tushare/stock_basic')
 
@@ -7,22 +6,23 @@ async function shellStockBasic () {
   const { code, data } = await stockBasic()
   if (code) return
   const { fields, items } = data
+
+  let SucCount = 0
+  let errCount = 0
   if (!items[0]) return // 如果没有数据就返回
   for (const itemIdx in items) {
     const params = {}
     params.uuid = uuidv4()
-    params.ts_code = items[itemIdx][0]
-    params.symbol = items[itemIdx][1]
-    params.name = items[itemIdx][2]
-    params.area = items[itemIdx][3]
-    params.industry = items[itemIdx][4]
-    params.market = items[itemIdx][5]
-    params.list_date = items[itemIdx][6]
+    for (const fieldIdx in fields) {
+      params[fields[fieldIdx]] = items[itemIdx][fieldIdx]
+    }
     const res = await insertRecord(params)
     if (res.affectedRows === 1) {
-      console.log(`已导入${params.symbol}基础信息`)
+      SucCount++
+      console.log(`已导入${SucCount}条数据`)
     } else {
-      console.log(`${params.symbol}基础信息导入失败`)
+      errCount++
+      console.log(`已有${errCount}条数据导入失败`)
     }
   }
 }
