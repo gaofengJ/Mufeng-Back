@@ -5,6 +5,13 @@ function insertRecord (params) {
   return exec(sql)
 }
 
+async function queryNameByTsCode (tsCode) {
+  const sql = `SELECT name FROM t_stock_basic WHERE ts_code = '${tsCode}'`
+  const res = await exec(sql)
+  return res[0]['name']
+}
+
 module.exports = {
-  insertRecord
+  insertRecord,
+  queryNameByTsCode
 }

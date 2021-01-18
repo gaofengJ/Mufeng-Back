@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid')
 const utils = require('../../utils/index')
 const { daily } = require('../../tushare/daily')
 const { insertRecord } = require('../../dao/tushare/daily')
+const { queryNameByTsCode } = require('../../dao/tushare/stock_basic')
 
 const dateArgv = process.argv[2] // node daily.js '2021-01-04'
 let _date = dateArgv ? new Date(dateArgv) : new Date() // 如果命令行中没有加日期，就使用当天日期
@@ -21,6 +22,7 @@ async function shellDaily (date) {
     for (const fieldIdx in fields) {
       params[fields[fieldIdx]] = items[itemIdx][fieldIdx]
     }
+    params.name = await queryNameByTsCode(params.ts_code)
     const res = await insertRecord(params)
     if (res.affectedRows === 1) {
       SucCount++
