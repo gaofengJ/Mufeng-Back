@@ -1,10 +1,10 @@
 const { tuShare } = require('./tushare')
 
-async function stockBasic () {
+async function stockBasic (exchange) {
   const paramObj = {
     api_name: 'stock_basic',
     params: {
-      exchange: 'SSE', // 交易所 SSE上交所,SZSE深交所
+      exchange: exchange, // 交易所 SSE上交所,SZSE深交所
     }
   }
   const res = await tuShare(paramObj)

@@ -12,7 +12,7 @@ async function shellDailyLimit (date) {
   const { code, data } = await dailyLimit(_date)
   if (code) return
   const { fields, items } = data // fields和items都为Object，并且不是类数组 [ 'trade_date', 'ts_code', 'up_limit', 'down_limit' ] 'object'
-  let SucCount = 0
+  let sucCount = 0
   let errCount = 0
   if (!items[0]) return // 如果没有数据就返回
   for (const itemIdx in items) {
@@ -21,13 +21,17 @@ async function shellDailyLimit (date) {
     for (const fieldIdx in fields) {
       params[fields[fieldIdx]] = items[itemIdx][fieldIdx]
     }
-    const res = await insertRecord(params)
-    if (res.affectedRows === 1) {
-      SucCount++
-      console.log(`${_date}已导入${SucCount}条数据`)
-    } else {
-      errCount++
-      console.log(`${_date}已有${errCount}条数据导入失败`)
+    try {
+      const res = await insertRecord(params)
+      if (res.affectedRows === 1) {
+        sucCount++
+        console.log(`${_date}已导入${sucCount}条数据 股票代码：${params.ts_code}`)
+      } else {
+        errCount++
+        console.log(`${_date}已有${errCount}条数据导入失败 股票代码：${params.ts_code}`)
+      }
+    } catch (e) {
+      console.log('e', e)
     }
   }
 }

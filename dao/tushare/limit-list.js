@@ -36,8 +36,7 @@ async function limitUNotLineAndUp (tradeDate, prevTradeDate) {
  * 当天曾涨停
  */
 async function hasLimited (date) {
-  const sql = `SELECT count(t_daily.ts_code) as count FROM t_daily, t_daily_limit, t_stock_basic WHERE t_daily.trade_date = '${date}' AND t_daily_limit.trade_date = '${date}' AND t_daily.high <> t_daily.close AND t_daily.high = t_daily_limit.up_limit AND locate('ST', t_stock_basic.name) = 0 AND locate('N', t_stock_basic.name) = 0 AND t_daily.ts_code = t_daily_limit.ts_code = t_stock_basic.ts_code;`
-  console.log('sql', sql)
+  const sql = `SELECT count(t_daily.ts_code) as count FROM t_daily, t_daily_limit WHERE t_daily.trade_date = '${date}' AND t_daily_limit.trade_date = '${date}' AND t_daily.high <> t_daily.close AND t_daily.high = t_daily_limit.up_limit AND locate('ST', t_daily.name) = 0 AND locate('N', t_daily.name) = 0 AND t_daily.ts_code = t_daily_limit.ts_code;`
   const res = await exec(sql)
   return res[0]['count']
 }

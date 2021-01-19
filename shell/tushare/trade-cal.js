@@ -11,22 +11,22 @@ async function shellDaily (year) {
   if (code) return
   const { fields, items } = data
 
-  let SucCount = 0
+  let sucCount = 0
   let errCount = 0
   if (!items[0]) return // 如果没有数据就返回
+  
   for (const itemIdx in items) {
     const params = {}
     params.uuid = uuidv4()
-    for (const fieldIdx in fields) {
-      params[fields[fieldIdx]] = items[itemIdx][fieldIdx]
-    }
+    params.calDate = items[itemIdx][1]
+    params.isOpen = items[itemIdx][2]
     const res = await insertRecord(params)
     if (res.affectedRows === 1) {
-      SucCount++
-      console.log(`${_year}已导入${SucCount}条数据`)
+      sucCount++
+      console.log(`${_year}已导入${sucCount}条数据 日期：${params.calDate}`)
     } else {
       errCount++
-      console.log(`${_year}已有${errCount}条数据导入失败`)
+      console.log(`${_year}已有${errCount}条数据导入失败 日期：${params.calDate}`)
     }
   }
 }

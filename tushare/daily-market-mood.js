@@ -27,9 +27,11 @@ async function dailyMarketAnalysis (date) {
   res.b = await limitUNotLine(prevTradeDate)
   res.c = await limitUNotLineAndOpenHigh(date, prevTradeDate)
   res.d = await limitUNotLineAndUp(date, prevTradeDate)
-  res.e = await hasLimited(date)
-  console.log(res.e)
-  return
+  res.e = await hasLimited(date) // 由于无法准确获取曾涨停数据，e的数量会偏大
+  res.sentimentA = res.a
+  res.sentimentB = Math.floor(res.c / res.b * 100)
+  res.sentimentC = Math.floor(res.d / res.b * 100)
+  res.sentimentD = Math.floor(res.e / (res.a + res.e) * 100)
 
   return res
 }
