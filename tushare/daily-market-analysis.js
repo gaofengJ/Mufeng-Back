@@ -1,11 +1,11 @@
 const utils = require('../utils/index')
-const { queryIsOpen } = require('../dao/tushare/trade_cal')
+const { queryIsOpen } = require('../dao/tushare/trade-cal')
 const {
   limitUNotLine,
   limitUNotLineAndOpenHigh,
   limitUNotLineAndUp,
   hasLimited
-} = require('../dao/tushare/limit_list')
+} = require('../dao/tushare/limit-list')
 
 async function dailyMarketAnalysis (date) {
 

@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid')
 const utils = require('../../utils/index')
-const { dailyLimit } = require('../../tushare/daily_limit')
-const { insertRecord } = require('../../dao/tushare/daily_limit')
+const { dailyLimit } = require('../../tushare/daily-limit')
+const { insertRecord } = require('../../dao/tushare/daily-limit')
 
 const dateArgv = process.argv[2] // node daily_limit.js '2021-01-04'
 let _date = dateArgv ? new Date(dateArgv) : new Date() // 如果命令行中没有加日期，就使用当天日期

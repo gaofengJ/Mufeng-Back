@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid')
-const { stockBasic } = require('../../tushare/stock_basic')
-const { insertRecord } = require('../../dao/tushare/stock_basic')
+const { stockBasic } = require('../../tushare/stock-basic')
+const { insertRecord } = require('../../dao/tushare/stock-basic')
 
 async function shellStockBasic () {
   const { code, data } = await stockBasic()

@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid')
-const { tradeCal } = require('../../tushare/trade_cal')
-const { insertRecord } = require('../../dao/tushare/trade_cal')
+const { tradeCal } = require('../../tushare/trade-cal')
+const { insertRecord } = require('../../dao/tushare/trade-cal')
 
 const yearArgv = process.argv[2] // node daily.js '2021'
 let _year = yearArgv || (new Date()).getFullYear() // 如果命令行中没有加年份，默认选中当年

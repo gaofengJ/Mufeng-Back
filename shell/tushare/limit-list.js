@@ -1,17 +1,20 @@
 const { v4: uuidv4 } = require('uuid')
 const utils = require('../../utils/index')
-const { dailyMarketAnalysis } = require('../../tushare/daily_market_analysis')
-const { insertRecord } = require('../../dao/tushare/daily')
+const { limitList } = require('../../tushare/limit-list')
+const { insertRecord } = require('../../dao/tushare/limit-list')
 
-const dateArgv = process.argv[2] // node daily_market_analysis.js '2021-01-04'
+const dateArgv = process.argv[2] // node limit_list.js '2021-01-04'
+
 let _date = dateArgv ? new Date(dateArgv) : new Date() // 如果命令行中没有加日期，就使用当天日期
 _date = utils._dateFormat(_date, 'yyyyMMdd')
 
-async function shellDaily (date) {
+async function shellLimitList (date) {
   _date = date || _date // 方便批量操作 批量操作时，每次传入一个date
-  const { code, data } = await dailyMarketAnalysis(_date)
+  const { code, data } = await limitList(_date)
   if (code) return
-  const { fields, items } = data // fields和items都为Object，并且不是类数组 [ 'ts_code', 'trade_date', 'open', 'high', 'low', 'close', 'pre_close', 'change', 'pct_chg', 'vol', 'amount' ] 'object'
+
+  const { fields, items } = data // fields和items都为Object，并且不是类数组 [ 'trade_date', 'ts_code', 'name', 'close', 'pct_chg', 'amp', 'fc_ratio', 'fl_ratio', 'fd_amount', 'first_time', 'last_time', 'open_times', 'strth', 'limit' ] 'object'
+
   let SucCount = 0
   let errCount = 0
   if (!items[0]) return // 如果没有数据就返回
@@ -33,7 +36,7 @@ async function shellDaily (date) {
 }
 
 ;(async () => {
-  shellDaily()
+  shellLimitList()
 })()
 
-module.exports = shellDaily
+module.exports = shellLimitList
