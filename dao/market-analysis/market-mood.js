@@ -14,7 +14,7 @@ function updateSentiment (date) {
 }
 
 async function selectSentiment (startDate, endDate) {
-  const sql = `SELECT id, from_unixtime(date / 1000, '%Y-%m-%d') as date, a, b, c, d, e, sentiment_a, sentiment_b, sentiment_c, sentiment_d FROM t_market_mood WHERE date >= ${startDate.getTime()} and date <= ${endDate.getTime()} order by date;`
+  const sql = `SELECT * FROM t_market_mood WHERE date >= ${startDate} and date <= ${endDate} order by date;`
   return await exec(sql)
 }
 

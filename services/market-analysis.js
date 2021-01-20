@@ -4,15 +4,15 @@ const {
   deleteSentiment,
   updateSentiment,
   selectSentiment
-} = require('../dao/market-analysis/market-analysis')
+} = require('../dao/market-analysis/market-mood')
 
 const {
   selectPercentStatistics
 } = require('../dao/market-analysis/percent-statistics')
 
 async function getMarketSentiment (startDate, endDate) {
-  startDate = new Date(`${startDate} 00:00:00`) // 取当天0点
-  endDate = new Date(`${endDate} 23:59:59`) // 取当天最晚点
+  startDate = utils._dateFormat(new Date(startDate), 'yyyyMMdd')
+  endDate = utils._dateFormat(new Date(endDate), 'yyyyMMdd')
   const list = await selectSentiment(startDate, endDate)
   return list
 }
@@ -107,10 +107,10 @@ async function getPercentStatistics (date) {
   ]
   const list = []
   for (let i = 0; i < rangeArr.length; i++) {
-    const res = await selectPercentStatistics(date, rangeArr[i]['value'])
+    const num = await selectPercentStatistics(date, rangeArr[i]['value'])
     list.push({
       key: rangeArr[i]['key'],
-      value: res.num
+      value: num
     })
   }
   return list
