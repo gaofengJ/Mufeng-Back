@@ -27,10 +27,10 @@ async function shellDaily (date) {
       const res = await insertRecord(params)
       if (res.affectedRows === 1) {
         sucCount++
-        console.log(`${_date}已导入${sucCount}条数据 股票代码：${params.ts_code}`)
+        console.log(`daily ${_date}已导入${sucCount}条数据 股票代码：${params.ts_code}`)
       } else {
         errCount++
-        console.log(`${_date}已有${errCount}条数据导入失败 股票代码：${params.ts_code}`)
+        console.log(`daily ${_date}已有${errCount}条数据导入失败 股票代码：${params.ts_code}`)
       }
     } catch (e) {
       console.log('e', e)
@@ -38,8 +38,10 @@ async function shellDaily (date) {
   }
 }
 
-;(async () => {
-  shellDaily()
-})()
+// ;(async () => {
+//   shellDaily()
+// })()
 
-module.exports = shellDaily
+module.exports = {
+  shellDaily
+}

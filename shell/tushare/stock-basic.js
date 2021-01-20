@@ -37,4 +37,6 @@ async function shellStockBasic (exchange) {
   await shellStockBasic('SZSE')
 })()
 
-module.exports = shellStockBasic
+module.exports = {
+  shellStockBasic
+}

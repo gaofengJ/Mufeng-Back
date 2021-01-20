@@ -25,10 +25,10 @@ async function shellDailyLimit (date) {
       const res = await insertRecord(params)
       if (res.affectedRows === 1) {
         sucCount++
-        console.log(`${_date}已导入${sucCount}条数据 股票代码：${params.ts_code}`)
+        console.log(`daily-limit ${_date}已导入${sucCount}条数据 股票代码：${params.ts_code}`)
       } else {
         errCount++
-        console.log(`${_date}已有${errCount}条数据导入失败 股票代码：${params.ts_code}`)
+        console.log(`daily-limit ${_date}已有${errCount}条数据导入失败 股票代码：${params.ts_code}`)
       }
     } catch (e) {
       console.log('e', e)
@@ -36,8 +36,10 @@ async function shellDailyLimit (date) {
   }
 }
 
-;(async () => {
-  shellDailyLimit()
-})()
+// ;(async () => {
+//   shellDailyLimit()
+// })()
 
-module.exports = shellDailyLimit
+module.exports = {
+  shellDailyLimit
+}

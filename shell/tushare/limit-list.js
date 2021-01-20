@@ -28,10 +28,10 @@ async function shellLimitList (date) {
       const res = await insertRecord(params)
       if (res.affectedRows === 1) {
         SucCount++
-        console.log(`${_date}已导入${SucCount}条数据 股票代码：${params.ts_code}`)
+        console.log(`limit-list ${_date}已导入${SucCount}条数据 股票代码：${params.ts_code}`)
       } else {
         errCount++
-        console.log(`${_date}已有${errCount}条数据导入失败 股票代码：${params.ts_code}`)
+        console.log(`limit-list ${_date}已有${errCount}条数据导入失败 股票代码：${params.ts_code}`)
       }
     } catch (e) {
       console.log('e', e)
@@ -39,8 +39,10 @@ async function shellLimitList (date) {
   }
 }
 
-;(async () => {
-  shellLimitList()
-})()
+// ;(async () => {
+//   shellLimitList()
+// })()
 
-module.exports = shellLimitList
+module.exports = {
+  shellLimitList
+}

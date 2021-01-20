@@ -20,17 +20,19 @@ async function shellDailyMarketMood (date) {
   try {
     const res = await insertRecord(params)
     if (res.affectedRows === 1) {
-      console.log(`${_date}导入成功`)
+      console.log(`daily-market-mood ${_date}导入成功`)
     } else {
-      console.log(`${_date}导入失败`)
+      console.log(`daily-market-mood ${_date}导入失败`)
     }
   } catch (e) {
     console.log('e', e)
   }
 }
 
-;(async () => {
-  shellDailyMarketMood()
-})()
+// ;(async () => {
+//   shellDailyMarketMood()
+// })()
 
-module.exports = shellDailyMarketMood
+module.exports = {
+  shellDailyMarketMood
+}

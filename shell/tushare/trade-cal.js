@@ -35,4 +35,6 @@ async function shellDaily (year) {
   shellDaily()
 })()
 
-module.exports = shellDaily
+module.exports = {
+  shellDaily
+}
