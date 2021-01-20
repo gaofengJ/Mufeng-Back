@@ -7,7 +7,7 @@ const dateArgv = process.argv[2] // node daily_market_analysis.js '2021-01-04'
 let _date = dateArgv ? new Date(dateArgv) : new Date() // 如果命令行中没有加日期，就使用当天日期
 _date = utils._dateFormat(_date, 'yyyyMMdd')
 
-async function shellDaily (date) {
+async function shellDailyMarketMood (date) {
   _date = date || _date // 方便批量操作 批量操作时，每次传入一个date
   const data = await dailyMarketAnalysis(_date)
 
@@ -30,7 +30,7 @@ async function shellDaily (date) {
 }
 
 ;(async () => {
-  shellDaily()
+  shellDailyMarketMood()
 })()
 
-module.exports = shellDaily
+module.exports = shellDailyMarketMood
