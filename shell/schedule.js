@@ -5,25 +5,22 @@ const { shellDailyLimit } = require('./tushare/daily-limit')
 const { shellLimitList } = require('./tushare/limit-list')
 const { shellDailyMarketMood } = require('./tushare/daily-market-mood')
 
-function tasks () {
+async function tasks () {
+
+  const _date = utils._dateFormat(new Date(), 'yyyyMMdd')
 
   // 涨跌停价
-  schedule.scheduleJob('0 0 17 * * 1-5', task(shellDailyLimit))
+  await shellDailyLimit(_date)
 
   // 获取日线行情
-  schedule.scheduleJob('0 0 18 * * 1-5', task(shellDaily))
+  await shellDaily(_date)
 
   // 涨跌停统计
-  schedule.scheduleJob('0 0 19 * * 1-5', task(shellLimitList))
+  await shellLimitList(_date)
 
   // 短线情绪
-  schedule.scheduleJob('0 30 19 * * 1-5', task(shellDailyMarketMood))
+  await shellDailyMarketMood(_date)
 
 }
 
-function task (fn) {
-  const date = utils._dateFormat(new Date(), 'yyyyMMdd')
-  fn(date)
-}
-
-tasks()
+schedule.scheduleJob('0 0 19 * * 1-5', tasks())

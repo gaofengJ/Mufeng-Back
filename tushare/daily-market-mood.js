@@ -7,7 +7,7 @@ const {
   hasLimited
 } = require('../dao/tushare/limit-list')
 
-async function dailyMarketAnalysis (date) {
+async function dailyMarketMood (date) {
 
   const prevTradeDate = await getPrevDate(date)
 
@@ -51,5 +51,5 @@ async function getPrevDate (date) {
 
 
 module.exports = {
-  dailyMarketAnalysis
+  dailyMarketMood
 }

@@ -24,7 +24,7 @@ async function tasks () {
   await shellLimitList(_date)
 
   // 短线情绪
-  // await shellDailyMarketMood(_date)
+  await shellDailyMarketMood(_date)
 
 }
 
