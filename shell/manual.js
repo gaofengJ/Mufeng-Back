@@ -1,4 +1,5 @@
 const utils = require('../utils/index')
+const { queryIsOpen } = require('../dao/tushare/trade-cal')
 const { shellDaily } = require('./tushare/daily')
 const { shellDailyLimit } = require('./tushare/daily-limit')
 const { shellLimitList } = require('./tushare/limit-list')
@@ -13,6 +14,12 @@ let _date = new Date(dateArgv)
 _date = utils._dateFormat(_date, 'yyyyMMdd')
 
 async function tasks () {
+
+  const isOpen = await queryIsOpen(_date)
+
+  console.log(isOpen, typeof isOpen)
+
+  return
 
   // 涨跌停价
   await shellDailyLimit(_date)

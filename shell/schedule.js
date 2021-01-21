@@ -1,5 +1,6 @@
 const schedule = require('node-schedule')
 const utils = require('../utils/index')
+const { queryIsOpen } = require('../dao/tushare/trade-cal')
 const { shellDaily } = require('./tushare/daily')
 const { shellDailyLimit } = require('./tushare/daily-limit')
 const { shellLimitList } = require('./tushare/limit-list')
@@ -8,6 +9,11 @@ const { shellDailyMarketMood } = require('./tushare/daily-market-mood')
 async function tasks () {
 
   const _date = utils._dateFormat(new Date(), 'yyyyMMdd')
+
+  const isOpen = await queryIsOpen(_date)
+
+  console.log(isOpen, typeof isOpen)
+  return
 
   // 涨跌停价
   await shellDailyLimit(_date)
