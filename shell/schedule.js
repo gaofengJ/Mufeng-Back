@@ -12,8 +12,10 @@ async function tasks () {
 
   const isOpen = await queryIsOpen(_date)
 
-  console.log(isOpen, typeof isOpen)
-  return
+  if (!isOpen) {
+    console.log(`${_date}非交易日，请重新选择时间`)
+    return
+  }
 
   // 涨跌停价
   await shellDailyLimit(_date)
