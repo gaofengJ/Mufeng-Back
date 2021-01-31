@@ -1,9 +1,7 @@
 const utils = require('../utils/index')
 const {
-  insertSentiment,
-  deleteSentiment,
-  updateSentiment,
-  selectSentiment
+  selectSentiment,
+  selectUpDownNum
 } = require('../dao/market-analysis/market-mood')
 
 const {
@@ -116,7 +114,15 @@ async function getPercentStatistics (date) {
   return list
 }
 
+async function getUpDownNum (startDate, endDate) {
+  startDate = utils._dateFormat(new Date(startDate), 'yyyyMMdd')
+  endDate = utils._dateFormat(new Date(endDate), 'yyyyMMdd')
+  const list = await selectUpDownNum(startDate, endDate)
+  return list
+}
+
 module.exports = {
   getMarketSentiment,
-  getPercentStatistics
+  getPercentStatistics,
+  getUpDownNum
 }

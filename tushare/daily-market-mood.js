@@ -1,6 +1,11 @@
 const utils = require('../utils/index')
 const { queryIsOpen } = require('../dao/tushare/trade-cal')
 const {
+  selectUp,
+  selectDown,
+  selectZero
+} = require('../dao/tushare/daily')
+const {
   limitUNotLine,
   limitUNotLineAndOpenHigh,
   limitUNotLineAndUp,
@@ -21,8 +26,10 @@ async function dailyMarketMood (date) {
     sentimentB: '', // 打板高开率 sentimentB = c / b
     sentimentC: '', // 打板成功率 sentimentC = d / b
     sentimentD: '', // 打板被砸率 sentimentD = e / (a + e)
+    up: '', // 上涨家数
+    down: '', // 下跌家数
+    zero: '' // 平盘家数
   }
-
   res.a = await limitUNotLine(date)
   res.b = await limitUNotLine(prevTradeDate)
   res.c = await limitUNotLineAndOpenHigh(date, prevTradeDate)
@@ -32,6 +39,9 @@ async function dailyMarketMood (date) {
   res.sentimentB = Math.floor(res.c / res.b * 100)
   res.sentimentC = Math.floor(res.d / res.b * 100)
   res.sentimentD = Math.floor(res.e / (res.a + res.e) * 100)
+  res.up = await selectUp(date)
+  res.down = await selectDown(date)
+  res.zero = await selectZero(date)
 
   return res
 }

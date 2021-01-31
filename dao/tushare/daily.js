@@ -17,9 +17,30 @@ async function selectRecord (startDate, endDate) {
   console.log(1)
 }
 
+async function selectUp (date) {
+  const sql = `SELECT count('ts_code') as up FROM t_daily WHERE t_daily.trade_date = ${date} AND t_daily.pct_chg > 0;`
+  const res = await exec(sql)
+  return res[0]['up']
+}
+
+async function selectDown (date) {
+  const sql = `SELECT count('ts_code') as down FROM t_daily WHERE t_daily.trade_date = ${date} AND t_daily.pct_chg < 0;`
+  const res = await exec(sql)
+  return res[0]['down']
+}
+
+async function selectZero (date) {
+  const sql = `SELECT count('ts_code') as zero FROM t_daily WHERE t_daily.trade_date = ${date} AND t_daily.pct_chg = 0;`
+  const res = await exec(sql)
+  return res[0]['zero']
+}
+
 module.exports = {
   insertRecord,
   deleteRecord,
   updateRecord,
-  selectRecord
+  selectRecord,
+  selectUp,
+  selectDown,
+  selectZero
 }

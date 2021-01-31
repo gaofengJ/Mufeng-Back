@@ -6,7 +6,8 @@ const {
 } = require('../model/resModel')
 const {
   getMarketSentiment,
-  getPercentStatistics
+  getPercentStatistics,
+  getUpDownNum
 } = require('../services/market-analysis')
 
 router.post('/market-sentiment', async (req, res, next) => {
@@ -23,6 +24,15 @@ router.post('/percent-statistics', async (req, res, next) => {
   date = new Date(date)
   const list = await getPercentStatistics(date)
   res.json(new SuccessModel({
+    list
+  }))
+})
+
+router.post('/up-down-num', async (req, res, next) => {
+  const { startDate, endDate } = req.body
+  const list = await getUpDownNum(startDate, endDate)
+  res.json(new SuccessModel({
+    total: list.length,
     list
   }))
 })
