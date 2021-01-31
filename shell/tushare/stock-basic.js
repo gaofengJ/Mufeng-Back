@@ -1,9 +1,11 @@
 const { v4: uuidv4 } = require('uuid')
 const { stockBasic } = require('../../tushare/stock-basic')
-const { insertRecord } = require('../../dao/tushare/stock-basic')
+const { insertRecord, emptyRecord } = require('../../dao/tushare/stock-basic')
 
-let SucCount = 0
-let errCount = 0
+async function shellEmptyStockBasic () {
+  await emptyRecord()
+  console.log('基本信息表已清空')
+}
 
 async function shellStockBasic (exchange) {
   const { code, data } = await stockBasic(exchange)
@@ -11,6 +13,8 @@ async function shellStockBasic (exchange) {
   const { fields, items } = data
 
   if (!items[0]) return // 如果没有数据就返回
+  let SucCount = 0
+  let errCount = 0
   for (const itemIdx in items) {
     const params = {}
     params.uuid = uuidv4()
@@ -33,6 +37,7 @@ async function shellStockBasic (exchange) {
 }
 
 ;(async () => {
+  await shellEmptyStockBasic()
   await shellStockBasic('SSE')
   await shellStockBasic('SZSE')
 })()

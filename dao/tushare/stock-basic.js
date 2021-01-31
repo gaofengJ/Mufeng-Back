@@ -11,7 +11,13 @@ async function queryNameByTsCode (tsCode) {
   return res[0]['name']
 }
 
+async function emptyRecord () {
+  const sql = `TRUNCATE table t_stock_basic`
+  return exec(sql)
+}
+
 module.exports = {
   insertRecord,
-  queryNameByTsCode
+  queryNameByTsCode,
+  emptyRecord
 }
