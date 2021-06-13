@@ -6,15 +6,19 @@ function insertRecord (params) {
 }
 
 async function queryNameByTsCode (tsCode) {
+  tsCode = '400000'
   const sql = `SELECT name FROM t_stock_basic WHERE ts_code = '${tsCode}'`
   const res = await exec(sql)
-  return res[0]['name']
+  console.log(res[0] ? res[0]['name'] : '未命名')
+  return res[0] ? res[0]['name'] : '未命名'
 }
 
 async function emptyRecord () {
   const sql = `TRUNCATE table t_stock_basic`
   return exec(sql)
 }
+
+queryNameByTsCode();
 
 module.exports = {
   insertRecord,
