@@ -6,10 +6,8 @@ function insertRecord (params) {
 }
 
 async function queryNameByTsCode (tsCode) {
-  tsCode = '400000'
   const sql = `SELECT name FROM t_stock_basic WHERE ts_code = '${tsCode}'`
   const res = await exec(sql)
-  console.log(res[0] ? res[0]['name'] : '未命名')
   return res[0] ? res[0]['name'] : '未命名'
 }
 
